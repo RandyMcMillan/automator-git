@@ -24,7 +24,6 @@
     }
 
     NSString *cmd  = [NSString stringWithFormat: @"PATH=/opt/local/bin:/usr/local/bin:/usr/local/git/bin:/usr/bin; git pull %@ %@", opt, repo];
-    [opt release];
 
     NSTask *task  = [[NSTask alloc] init];
     NSPipe *pipe  = [[NSPipe alloc] init];
@@ -38,11 +37,8 @@
 
     NSFileHandle *handle = [pipe fileHandleForReading];
     NSData *data = [handle  readDataToEndOfFile];
-    NSString *result = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+    NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 
-    [cmd release];
-    [task release];
-    [pipe release];
 
     return input;
 }
